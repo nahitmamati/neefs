@@ -9,11 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #for state management
+  #4 state management
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
   either_dart: ^0.4.0
   equatable: ^2.0.5
+  
+  #routing
+  go_router: ^7.0.1
 
   #etc
   flex_color_scheme: ^7.1.0
