@@ -15,19 +15,27 @@ dependencies:
   flutter_bloc: ^8.1.2
   either_dart: ^0.4.0
   equatable: ^2.0.5
-  
+    
+  #request
+  dio: ^5.1.2
+
   #routing
   go_router: ^7.0.1
 
   #local storage
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  flutter_secure_storage: ^8.0.0
+
+  #service locator
+  get_it: ^7.6.0
   
-  #request
-  dio: ^5.1.2
+  #connectivity check
+  connectivity_plus: ^4.0.1
 
   #etc
   flex_color_scheme: ^7.1.0
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:

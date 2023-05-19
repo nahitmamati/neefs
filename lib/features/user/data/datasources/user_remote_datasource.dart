@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:neefs/core/error/exceptions.dart';
-import 'package:neefs/core/util/constants.dart';
+
 import 'package:neefs/features/user/data/models/user_model.dart';
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12,8 +12,9 @@ abstract class UserRemoteDataSource {
 ////////////////////////////////////////////////////////////////////////////
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-  final Dio dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
+  final Dio dio;
 
+  UserRemoteDataSourceImpl({required this.dio});
   @override
   Future<UserModel> login(String email, String password) {
     var formData = FormData.fromMap({
