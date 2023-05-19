@@ -1,22 +1,29 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
+part 'user.g.dart';
 
+@HiveType(typeId: 0)
 class User extends Equatable {
-  final bool success;
-  final String userId;
-  final String name;
-  final String phone;
-  final String address;
-  final String profileImage;
-  final String email;
-  final String emailVerifiedAt;
-  final String createdAt;
-  final String updatedAt;
-  final String token;
-  final List<Wallet> wallets;
+  @HiveField(0)
+  final String? name;
+  @HiveField(1)
+  final String? phone;
+  @HiveField(2)
+  final String? address;
+  @HiveField(3)
+  final String? profileImage;
+  @HiveField(4)
+  final String? email;
+  @HiveField(5)
+  final String? emailVerifiedAt;
+  @HiveField(6)
+  final String? createdAt;
+  @HiveField(7)
+  final String? updatedAt;
+  @HiveField(8)
+  final List<Wallet?> wallets;
   const User(
-      {required this.success,
-      required this.userId,
-      required this.name,
+      {required this.name,
       required this.phone,
       required this.address,
       required this.profileImage,
@@ -24,12 +31,9 @@ class User extends Equatable {
       required this.emailVerifiedAt,
       required this.createdAt,
       required this.updatedAt,
-      required this.token,
       required this.wallets});
   @override
   List<Object?> get props => [
-        success,
-        userId,
         name,
         phone,
         address,
@@ -38,21 +42,31 @@ class User extends Equatable {
         emailVerifiedAt,
         createdAt,
         updatedAt,
-        token,
         wallets
       ];
 }
 
+@HiveType(typeId: 1)
 class Wallet extends Equatable {
-  final String id;
-  final String userId;
-  final String type;
-  final String balance;
-  final String inUse;
-  final String status;
-  final String meta;
-  final String createdAt;
-  final String updatedAt;
+  @HiveField(0)
+  final int? id;
+  @HiveField(1)
+  final int? userId;
+  @HiveField(2)
+  final String? type;
+  @HiveField(3)
+  final int? balance;
+  @HiveField(4)
+  final int? inUse;
+  @HiveField(5)
+  final String? status;
+  @HiveField(6)
+  final String? meta;
+  @HiveField(7)
+  final String? createdAt;
+  @HiveField(8)
+  final String? updatedAt;
+  @HiveField(9)
   const Wallet({
     required this.id,
     required this.userId,

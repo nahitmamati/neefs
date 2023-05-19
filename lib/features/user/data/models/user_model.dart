@@ -1,22 +1,17 @@
 import 'package:neefs/features/user/domain/entities/user.dart';
 
 class UserModel extends User {
-  UserModel({
-    required bool success,
-    required String userId,
-    required String name,
-    required String phone,
-    required String address,
-    required String profileImage,
-    required String email,
-    required String emailVerifiedAt,
-    required String createdAt,
-    required String updatedAt,
-    required String token,
-    required List<WalletModel> wallets,
+  const UserModel({
+    required String? name,
+    required String? phone,
+    required String? address,
+    required String? profileImage,
+    required String? email,
+    required String? emailVerifiedAt,
+    required String? createdAt,
+    required String? updatedAt,
+    required List<WalletModel?> wallets,
   }) : super(
-          success: success,
-          userId: userId,
           name: name,
           phone: phone,
           address: address,
@@ -25,11 +20,11 @@ class UserModel extends User {
           emailVerifiedAt: emailVerifiedAt,
           createdAt: createdAt,
           updatedAt: updatedAt,
-          token: token,
           wallets: wallets,
         );
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final List<WalletModel>? walletsJson = json['wallets'];
+    final List<dynamic>? walletsJson = json['wallets'];
     final List<WalletModel> wallets = walletsJson != null
         ? walletsJson
             .map((dynamic walletJson) => WalletModel.fromJson(walletJson))
@@ -37,8 +32,6 @@ class UserModel extends User {
         : [];
 
     return UserModel(
-      success: json['success'],
-      userId: json['user_id'],
       name: json['name'],
       phone: json['phone'],
       address: json['address'],
@@ -47,15 +40,12 @@ class UserModel extends User {
       emailVerifiedAt: json['email_verified_at'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      token: json['token'],
       wallets: wallets,
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {
-      'success': success,
-      'user_id': userId,
       'name': name,
       'phone': phone,
       'address': address,
@@ -64,25 +54,37 @@ class UserModel extends User {
       'email_verified_at': emailVerifiedAt,
       'created_at': createdAt,
       'updated_at': updatedAt,
-      'token': token,
       'wallets': wallets.map((e) => (e as WalletModel).toJson()).toList()
     };
 
     return data;
   }
+
+  @override
+  List<Object?> get props => [
+        name,
+        phone,
+        address,
+        profileImage,
+        email,
+        emailVerifiedAt,
+        createdAt,
+        updatedAt,
+        wallets
+      ];
 }
 
 class WalletModel extends Wallet {
   const WalletModel(
-      {required String id,
-      required String userId,
-      required String type,
-      required String balance,
-      required String inUse,
-      required String status,
-      required String meta,
-      required String createdAt,
-      required String updatedAt})
+      {required int? id,
+      required int? userId,
+      required String? type,
+      required int? balance,
+      required int? inUse,
+      required String? status,
+      required String? meta,
+      required String? createdAt,
+      required String? updatedAt})
       : super(
             id: id,
             userId: userId,
