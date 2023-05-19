@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:neefs/core/network/network_info.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
@@ -13,8 +14,9 @@ import 'injection_container.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
-  await locator.init();
   await Hive.initFlutter();
+  await locator.init();
+  print(getIt<NetworkInfo>().isConnected());
 }
 
 class MainApp extends StatelessWidget {
