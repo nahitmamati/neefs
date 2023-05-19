@@ -10,6 +10,10 @@ abstract class UserLocalDataSource {
 ////////////////////////////////////////////////////////////////////////////
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
+  UserLocalDataSourceImpl(
+      {required this.userAdaptor, required this.walletAdapter});
+  final UserAdapter userAdaptor;
+  final WalletAdapter walletAdapter;
   @override
   Future<UserModel?> getUser() async {
     final box = await _getBox();
@@ -24,10 +28,10 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   Future<Box<UserModel>> _getBox() async {
     if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(UserAdapter());
+      Hive.registerAdapter(userAdaptor);
     }
     if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(WalletAdapter());
+      Hive.registerAdapter(walletAdapter);
     }
     if (Hive.isBoxOpen('user')) {
       return Hive.box('user');

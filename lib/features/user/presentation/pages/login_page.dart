@@ -20,9 +20,12 @@ class _LoginPageState extends State<LoginPage> {
             flex: 25,
             child: Stack(
               children: [
-                Container(
-                  color: Color.fromARGB(255, 13, 28, 47),
-                ),
+                SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Container(
+                      color: Theme.of(context).colorScheme.primary,
+                    )),
                 Positioned(
                   bottom: 1,
                   right: -20,
@@ -30,7 +33,10 @@ class _LoginPageState extends State<LoginPage> {
                     width: 900,
                     height: 900,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 21, 37, 52),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer
+                            .withOpacity(0.4),
                         borderRadius: BorderRadius.circular(400)),
                   ),
                 ),
@@ -41,12 +47,12 @@ class _LoginPageState extends State<LoginPage> {
                     width: 600,
                     height: 600,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 29, 45, 58),
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                       borderRadius: BorderRadius.circular(400),
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,11 +60,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         "Sign in to your\nAccount",
-                        style: TextStyle(fontSize: 32, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 32,
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                       Text(
                         "Sign in to your Account",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ],
                   ),
@@ -77,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: "Email",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.grey)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                 ),
@@ -91,7 +100,6 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: "Password",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.grey),
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -108,15 +116,10 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    style: ButtonStyle(
-                        overlayColor:
-                            MaterialStatePropertyAll(Colors.transparent)),
                     onPressed: () {},
                     child: Text(
                       "Forgot Password?",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 192, 232, 99),
-                      ),
+                      style: TextStyle(),
                     ),
                   ),
                 ),
@@ -126,18 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: 50,
-                  child: TextButton(
-                    style: ButtonStyle(
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8))),
-                      backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 192, 232, 99),
-                      ),
-                    ),
+                  child: FilledButton(
                     onPressed: () {},
                     child: Text(
                       "Login",
-                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ),
@@ -147,17 +142,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                      style: ButtonStyle(
-                          overlayColor:
-                              MaterialStatePropertyAll(Colors.transparent)),
                       onPressed: () {
                         // GoRouter.of(context).push("/register");
                       },
                       child: Text(
                         "Register",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 192, 232, 99),
-                        ),
                       ),
                     ),
                   ],
