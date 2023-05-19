@@ -1,22 +1,19 @@
+import 'package:hive/hive.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
 
+@HiveType(typeId: 0)
 class UserModel extends User {
   const UserModel({
-    required bool? success,
-    required int? userId,
-    required String? name,
-    required String? phone,
-    required String? address,
-    required String? profileImage,
-    required String? email,
-    required String? emailVerifiedAt,
-    required String? createdAt,
-    required String? updatedAt,
-    required String? token,
-    required List<WalletModel?> wallets,
+    @HiveField(1) required String? name,
+    @HiveField(2) required String? phone,
+    @HiveField(3) required String? address,
+    @HiveField(4) required String? profileImage,
+    @HiveField(5) required String? email,
+    @HiveField(6) required String? emailVerifiedAt,
+    @HiveField(7) required String? createdAt,
+    @HiveField(8) required String? updatedAt,
+    @HiveField(9) required List<WalletModel?> wallets,
   }) : super(
-          success: success,
-          userId: userId,
           name: name,
           phone: phone,
           address: address,
@@ -25,7 +22,6 @@ class UserModel extends User {
           emailVerifiedAt: emailVerifiedAt,
           createdAt: createdAt,
           updatedAt: updatedAt,
-          token: token,
           wallets: wallets,
         );
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -37,8 +33,6 @@ class UserModel extends User {
         : [];
 
     return UserModel(
-      success: json['success'],
-      userId: json['user_id'],
       name: json['name'],
       phone: json['phone'],
       address: json['address'],
@@ -47,15 +41,12 @@ class UserModel extends User {
       emailVerifiedAt: json['email_verified_at'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      token: json['token'],
       wallets: wallets,
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {
-      'success': success,
-      'user_id': userId,
       'name': name,
       'phone': phone,
       'address': address,
@@ -64,7 +55,6 @@ class UserModel extends User {
       'email_verified_at': emailVerifiedAt,
       'created_at': createdAt,
       'updated_at': updatedAt,
-      'token': token,
       'wallets': wallets.map((e) => (e as WalletModel).toJson()).toList()
     };
 
