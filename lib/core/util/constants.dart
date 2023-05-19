@@ -1,3 +1,3 @@
 class Constants {
-  static const String baseUrl = "https://api.eskanist.com/public/api";
+  static const String baseUrl = "https://api.qline.app/api";
 }

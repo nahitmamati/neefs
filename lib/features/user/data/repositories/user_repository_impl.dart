@@ -24,14 +24,14 @@ class UserRepositoryImpl implements UserRepository {
         await userLocalDataSource.putUser(userModel);
         return Right(userModel);
       } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.toString()));
+        return Left(ServerFailure(message: e.message));
       }
     } else {
       try {
         final userModel = await userLocalDataSource.getUser();
         return Right(userModel!);
       } on CacheException catch (e) {
-        return Left(CacheFailure(message: e.toString()));
+        return Left(CacheFailure(message: e.message));
       }
     }
   }
@@ -45,7 +45,7 @@ class UserRepositoryImpl implements UserRepository {
       await userLocalDataSource.putUser(userModel);
       return Right(userModel);
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+      return Left(ServerFailure(message: e.message));
     }
   }
 }

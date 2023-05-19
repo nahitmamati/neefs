@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:neefs/core/error/exceptions.dart';
+
 import 'package:neefs/features/user/data/models/user_model.dart';
 
 ////////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     if (response.statusCode == 200 && response.data['success'] == true) {
       return UserModel.fromJson(response.data);
     } else {
-      throw ServerException();
+      throw ServerException(message: response.data['msg']);
     }
   }
 }

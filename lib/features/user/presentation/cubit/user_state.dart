@@ -9,18 +9,32 @@ abstract class UserState extends Equatable {
 
 class UserInitial extends UserState {}
 
+class UserLoading extends UserState {}
+
 //When page loaded
 class UserLoginLoaded extends UserState {}
 
 class UserRegisterLoaded extends UserState {}
 
 //Failed
-class UserLoginFailed extends UserState {}
+class UserLoginFailed extends UserState {
+  const UserLoginFailed({required this.failure});
+  final Failure failure;
+}
 
-class UserRegisterFailed extends UserState {}
+class UserRegisterFailed extends UserState {
+  const UserRegisterFailed({required this.failure});
+  final Failure failure;
+}
 
 //Successful
 
-class UserLoginSuccessfull extends UserState {}
+class UserLoginSuccessfull extends UserState {
+  const UserLoginSuccessfull({required this.user});
+  final User user;
+}
 
-class UserRegisterSuccessfull extends UserState {}
+class UserRegisterSuccessfull extends UserState {
+  const UserRegisterSuccessfull({required this.user});
+  final User user;
+}

@@ -12,9 +12,7 @@ void main() {
       final userModel = await userRemoteDataSource.login(
           "nahit.mamati4@gmail.com", "Deneme123@");
       print(userModel.toJson());
-    } on ServerException catch (se) {
-      print(se.message);
-    }
+    } on ServerException catch (se) {}
   });
   test("Register", () async {
     try {
@@ -23,8 +21,6 @@ void main() {
       final userModel = await userRemoteDataSource.register("Nahit Mamati",
           "nahit.mamati15@gmail.com", "Deneme123@", "Deneme123@");
       print(userModel.toJson());
-    } on ServerException catch (se) {
-      print(se.message);
-    }
+    } on ServerException catch (se) {}
   });
 }

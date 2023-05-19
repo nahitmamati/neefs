@@ -22,9 +22,7 @@ void main() {
       final cachedUser = await userLocalDataSource.getUser();
       print(cachedUser!.toJson());
       print("Cached user successfully goted.");
-    } on ServerException catch (se) {
-      print(se.message);
-    }
+    } on ServerException catch (se) {}
   });
   test("Get", () async {
     try {
@@ -35,8 +33,6 @@ void main() {
       final cachedUser = await userLocalDataSource.getUser();
       print(cachedUser!.toJson());
       print("Cached user successfully goted.");
-    } on ServerException catch (se) {
-      print(se.message);
-    }
+    } on ServerException catch (se) {}
   });
 }

@@ -11,6 +11,8 @@ import 'package:neefs/features/user/data/datasources/user_remote_datasource.dart
 import 'package:neefs/features/user/data/repositories/user_repository_impl.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
 import 'package:neefs/features/user/domain/repositories/user_repository.dart';
+import 'package:neefs/features/user/domain/usecases/login_usecase.dart';
+import 'package:neefs/features/user/domain/usecases/register_usecase.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 
 import 'core/util/color_schemes.dart';
@@ -18,11 +20,6 @@ import 'core/util/constants.dart';
 
 final getIt = GetIt.instance;
 Future<void> init() async {
-  //Cubits
-  getIt.registerFactory<UserCubit>(() => UserCubit());
-  getIt.registerFactory<NewsCubit>(() => NewsCubit());
-  getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
-
   //Data Sources
   getIt.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(
@@ -65,4 +62,25 @@ Future<void> init() async {
         userLocalDataSource: getIt<UserLocalDataSource>(),
         networkInfo: getIt<NetworkInfo>()),
   );
+
+  //Usecases
+  getIt.registerLazySingleton<LoginUsecase>(
+      () => LoginUsecase(userRepository: getIt<UserRepository>()));
+  getIt.registerLazySingleton<RegisterUsecase>(
+      () => RegisterUsecase(userRepository: getIt<UserRepository>()));
+
+  //Cubits
+  getIt.registerFactory<UserCubit>(() => UserCubit(
+      loginUseCase: getIt<LoginUsecase>(),
+      registerUsecase: getIt<RegisterUsecase>()));
+  getIt.registerFactory<NewsCubit>(() => NewsCubit());
+  getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
+
+  //TextEditingControls
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'emailController');
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'passwordController');
 }

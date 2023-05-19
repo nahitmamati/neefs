@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:neefs/core/network/network_info.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';

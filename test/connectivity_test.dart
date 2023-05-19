@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:neefs/core/network/network_info.dart';
 
 void main() {
-  test("isConnected?", () {
+  test("isConnected?", () async {
     final networkInfo = NetworkInfo(connectivity: Connectivity());
-    print(networkInfo.isConnected());
+    print(await networkInfo.isConnected);
   });
 }
