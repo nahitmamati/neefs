@@ -1,18 +1,16 @@
-import 'package:hive/hive.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
 
-@HiveType(typeId: 0)
 class UserModel extends User {
   const UserModel({
-    @HiveField(1) required String? name,
-    @HiveField(2) required String? phone,
-    @HiveField(3) required String? address,
-    @HiveField(4) required String? profileImage,
-    @HiveField(5) required String? email,
-    @HiveField(6) required String? emailVerifiedAt,
-    @HiveField(7) required String? createdAt,
-    @HiveField(8) required String? updatedAt,
-    @HiveField(9) required List<WalletModel?> wallets,
+    required String? name,
+    required String? phone,
+    required String? address,
+    required String? profileImage,
+    required String? email,
+    required String? emailVerifiedAt,
+    required String? createdAt,
+    required String? updatedAt,
+    required List<WalletModel?> wallets,
   }) : super(
           name: name,
           phone: phone,
@@ -24,6 +22,7 @@ class UserModel extends User {
           updatedAt: updatedAt,
           wallets: wallets,
         );
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     final List<dynamic>? walletsJson = json['wallets'];
     final List<WalletModel> wallets = walletsJson != null
@@ -60,6 +59,19 @@ class UserModel extends User {
 
     return data;
   }
+
+  @override
+  List<Object?> get props => [
+        name,
+        phone,
+        address,
+        profileImage,
+        email,
+        emailVerifiedAt,
+        createdAt,
+        updatedAt,
+        wallets
+      ];
 }
 
 class WalletModel extends Wallet {

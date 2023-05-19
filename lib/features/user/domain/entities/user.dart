@@ -1,15 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
+part 'user.g.dart';
 
+@HiveType(typeId: 0)
 class User extends Equatable {
+  @HiveField(0)
   final String? name;
+  @HiveField(1)
   final String? phone;
+  @HiveField(2)
   final String? address;
+  @HiveField(3)
   final String? profileImage;
+  @HiveField(4)
   final String? email;
+  @HiveField(5)
   final String? emailVerifiedAt;
+  @HiveField(6)
   final String? createdAt;
+  @HiveField(7)
   final String? updatedAt;
-
+  @HiveField(8)
   final List<Wallet?> wallets;
   const User(
       {required this.name,
@@ -35,16 +46,27 @@ class User extends Equatable {
       ];
 }
 
+@HiveType(typeId: 1)
 class Wallet extends Equatable {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final int? userId;
+  @HiveField(2)
   final String? type;
+  @HiveField(3)
   final int? balance;
+  @HiveField(4)
   final int? inUse;
+  @HiveField(5)
   final String? status;
+  @HiveField(6)
   final String? meta;
+  @HiveField(7)
   final String? createdAt;
+  @HiveField(8)
   final String? updatedAt;
+  @HiveField(9)
   const Wallet({
     required this.id,
     required this.userId,
