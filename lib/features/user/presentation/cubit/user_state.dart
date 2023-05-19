@@ -8,3 +8,19 @@ abstract class UserState extends Equatable {
 }
 
 class UserInitial extends UserState {}
+
+//When page loaded
+class UserLoginLoaded extends UserState {}
+
+class UserRegisterLoaded extends UserState {}
+
+//Failed
+class UserLoginFailed extends UserState {}
+
+class UserRegisterFailed extends UserState {}
+
+//Successful
+
+class UserLoginSuccessfull extends UserState {}
+
+class UserRegisterSuccessfull extends UserState {}
