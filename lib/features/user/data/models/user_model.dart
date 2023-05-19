@@ -1,19 +1,19 @@
 import 'package:neefs/features/user/domain/entities/user.dart';
 
 class UserModel extends User {
-  UserModel({
-    required bool success,
-    required String userId,
-    required String name,
-    required String phone,
-    required String address,
-    required String profileImage,
-    required String email,
-    required String emailVerifiedAt,
-    required String createdAt,
-    required String updatedAt,
-    required String token,
-    required List<WalletModel> wallets,
+  const UserModel({
+    required bool? success,
+    required int? userId,
+    required String? name,
+    required String? phone,
+    required String? address,
+    required String? profileImage,
+    required String? email,
+    required String? emailVerifiedAt,
+    required String? createdAt,
+    required String? updatedAt,
+    required String? token,
+    required List<WalletModel?> wallets,
   }) : super(
           success: success,
           userId: userId,
@@ -29,7 +29,7 @@ class UserModel extends User {
           wallets: wallets,
         );
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final List<WalletModel>? walletsJson = json['wallets'];
+    final List<dynamic>? walletsJson = json['wallets'];
     final List<WalletModel> wallets = walletsJson != null
         ? walletsJson
             .map((dynamic walletJson) => WalletModel.fromJson(walletJson))
@@ -74,15 +74,15 @@ class UserModel extends User {
 
 class WalletModel extends Wallet {
   const WalletModel(
-      {required String id,
-      required String userId,
-      required String type,
-      required String balance,
-      required String inUse,
-      required String status,
-      required String meta,
-      required String createdAt,
-      required String updatedAt})
+      {required int? id,
+      required int? userId,
+      required String? type,
+      required int? balance,
+      required int? inUse,
+      required String? status,
+      required String? meta,
+      required String? createdAt,
+      required String? updatedAt})
       : super(
             id: id,
             userId: userId,

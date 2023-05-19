@@ -18,6 +18,9 @@ dependencies:
   #routing
   go_router: ^7.0.1
 
+  #request
+  dio: ^5.1.2
+
   #etc
   flex_color_scheme: ^7.1.0
 

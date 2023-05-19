@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final bool success;
-  final String userId;
-  final String name;
-  final String phone;
-  final String address;
-  final String profileImage;
-  final String email;
-  final String emailVerifiedAt;
-  final String createdAt;
-  final String updatedAt;
-  final String token;
-  final List<Wallet> wallets;
+  final bool? success;
+  final int? userId;
+  final String? name;
+  final String? phone;
+  final String? address;
+  final String? profileImage;
+  final String? email;
+  final String? emailVerifiedAt;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? token;
+  final List<Wallet?> wallets;
   const User(
       {required this.success,
       required this.userId,
@@ -44,15 +44,15 @@ class User extends Equatable {
 }
 
 class Wallet extends Equatable {
-  final String id;
-  final String userId;
-  final String type;
-  final String balance;
-  final String inUse;
-  final String status;
-  final String meta;
-  final String createdAt;
-  final String updatedAt;
+  final int? id;
+  final int? userId;
+  final String? type;
+  final int? balance;
+  final int? inUse;
+  final String? status;
+  final String? meta;
+  final String? createdAt;
+  final String? updatedAt;
   const Wallet({
     required this.id,
     required this.userId,
