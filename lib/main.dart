@@ -8,15 +8,14 @@ import 'package:neefs/features/user/presentation/pages/login_page.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'injection_container.dart' as locator;
+import 'injection_container.dart' as Locator;
 import 'injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
   await Hive.initFlutter();
-  await locator.init();
-  print(getIt<NetworkInfo>().isConnected());
+  await Locator.init();
 }
 
 class MainApp extends StatelessWidget {

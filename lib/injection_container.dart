@@ -23,13 +23,6 @@ Future<void> init() async {
   getIt.registerFactory<NewsCubit>(() => NewsCubit());
   getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
 
-  //Repositories
-  getIt.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(
-        userRemoteDataSource: getIt<UserRemoteDataSource>(),
-        userLocalDataSource: getIt<UserLocalDataSource>()),
-  );
-
   //Data Sources
   getIt.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(
@@ -64,5 +57,12 @@ Future<void> init() async {
 
   getIt.registerLazySingleton<NetworkInfo>(
     () => NetworkInfo(connectivity: getIt<Connectivity>()),
+  ); //Repositories
+
+  getIt.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(
+        userRemoteDataSource: getIt<UserRemoteDataSource>(),
+        userLocalDataSource: getIt<UserLocalDataSource>(),
+        networkInfo: getIt<NetworkInfo>()),
   );
 }
