@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neefs/core/network/network_info.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
+import 'package:neefs/features/news/presentation/pages/home_page.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/data/datasources/user_local_datasource.dart';
 import 'package:neefs/features/user/data/datasources/user_remote_datasource.dart';
@@ -24,6 +25,7 @@ import 'features/user/presentation/pages/login_page.dart';
 import 'features/user/presentation/pages/register_page.dart';
 
 final getIt = GetIt.instance;
+
 Future<void> init() async {
   //Loading
   EasyLoading.instance
@@ -42,7 +44,7 @@ Future<void> init() async {
 
   //Router
   getIt.registerLazySingleton<GoRouter>(() => GoRouter(
-        initialLocation: '/login',
+        initialLocation: '/home',
         routes: <RouteBase>[
           GoRoute(
             path: '/login',
@@ -57,6 +59,12 @@ Future<void> init() async {
                 },
               ),
             ],
+          ),
+          GoRoute(
+            path: '/home',
+            builder: (context, state) {
+              return const HomePage();
+            },
           ),
         ],
       ));
