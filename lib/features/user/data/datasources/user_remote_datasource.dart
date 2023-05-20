@@ -37,11 +37,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   Future<UserModel> _getUser(String endpoint, FormData formData) async {
-    final response = await dio.post(endpoint, data: formData);
-    if (response.statusCode == 200 && response.data['success'] == true) {
-      return UserModel.fromJson(response.data);
-    } else {
-      throw ServerException(message: response.data['msg']);
+    try {
+      final response = await dio.post(endpoint, data: formData);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return UserModel.fromJson(response.data);
+      } else {
+        throw ServerException(
+            message: response.statusCode != 200
+                ? "Server Error : ${response.statusCode.toString()}"
+                : response.data['msg']);
+      }
+    } on DioError catch (ex) {
+      throw ServerException(message: "Server Error : ${ex.message}");
     }
   }
 }

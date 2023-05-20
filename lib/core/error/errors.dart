@@ -14,3 +14,7 @@ class ServerFailure extends Failure {
 class CacheFailure extends Failure {
   CacheFailure({required super.message});
 }
+
+class ValidationFailure extends Failure {
+  ValidationFailure({super.message});
+}

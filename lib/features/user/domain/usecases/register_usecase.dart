@@ -5,22 +5,22 @@ import 'package:neefs/core/usecases/use_case.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
 import 'package:neefs/features/user/domain/repositories/user_repository.dart';
 
-class RegisterUsecase implements UseCase<User, Params> {
+class RegisterUsecase implements UseCase<User, RegisterParams> {
   RegisterUsecase({required this.userRepository});
   final UserRepository userRepository;
   @override
-  Future<Either<Failure, User>> call(Params params) {
+  Future<Either<Failure, User>> call(RegisterParams params) {
     return userRepository.register(
         params.fullName, params.email, params.password, params.repeatPassword);
   }
 }
 
-class Params extends Equatable {
+class RegisterParams extends Equatable {
   final String fullName;
   final String email;
   final String password;
   final String repeatPassword;
-  Params({
+  RegisterParams({
     required this.fullName,
     required this.email,
     required this.password,
