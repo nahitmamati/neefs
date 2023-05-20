@@ -9,3 +9,11 @@ class LoginValidation extends Validation {
     return formKey.currentState!.validate();
   }
 }
+
+class RegisterValidation extends Validation {
+  static bool get isValid {
+    final formKey =
+        getIt<GlobalKey<FormState>>(instanceName: "registerFormKey");
+    return formKey.currentState!.validate();
+  }
+}

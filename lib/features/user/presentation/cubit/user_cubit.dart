@@ -39,18 +39,22 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> register(String fullName, String email, String password,
       String repeatPassword) async {
-    emit(UserLoading());
-    final userOrFailure = await registerUsecase.call(RegisterParams(
-        fullName: fullName,
-        email: email,
-        password: password,
-        repeatPassword: repeatPassword));
+    if (RegisterValidation.isValid) {
+      emit(UserLoading());
+      final userOrFailure = await registerUsecase.call(RegisterParams(
+          fullName: fullName,
+          email: email,
+          password: password,
+          repeatPassword: repeatPassword));
 
-    print("printed $userOrFailure");
-    if (userOrFailure is User) {
-      emit(UserRegisterSuccessfull(user: userOrFailure.right));
+      print("printed $userOrFailure");
+      if (userOrFailure is User) {
+        emit(UserRegisterSuccessfull(user: userOrFailure.right));
+      } else {
+        emit(UserRegisterFailed(failure: userOrFailure.left));
+      }
     } else {
-      emit(UserRegisterFailed(failure: userOrFailure.left));
+      emit(UserRegisterValidationFailed(failure: ValidationFailure()));
     }
   }
 

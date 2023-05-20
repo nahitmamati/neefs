@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:neefs/injection_container.dart';
@@ -215,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                           const Text("Don't have an account?"),
                           TextButton(
                             onPressed: () {
-                              // GoRouter.of(context).push("/register");
+                              GoRouter.of(context).go('/login/register');
                             },
                             child: Text(
                               "Register",

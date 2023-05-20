@@ -22,6 +22,11 @@ class UserLoginValidationFailed extends UserState {
   final Failure failure;
 }
 
+class UserRegisterValidationFailed extends UserState {
+  const UserRegisterValidationFailed({required this.failure});
+  final Failure failure;
+}
+
 //Failed
 class UserLoginFailed extends UserState {
   const UserLoginFailed({required this.failure});

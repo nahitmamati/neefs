@@ -1,8 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:neefs/core/network/network_info.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
@@ -18,9 +20,47 @@ import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 
 import 'core/util/color_schemes.dart';
 import 'core/util/constants.dart';
+import 'features/user/presentation/pages/login_page.dart';
+import 'features/user/presentation/pages/register_page.dart';
 
 final getIt = GetIt.instance;
 Future<void> init() async {
+  //Loading
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.spinningCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = lightColorScheme.primary
+    ..backgroundColor = lightColorScheme.surface
+    ..indicatorColor = lightColorScheme.primary
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+
+  //Router
+  getIt.registerLazySingleton<GoRouter>(() => GoRouter(
+        initialLocation: '/login',
+        routes: <RouteBase>[
+          GoRoute(
+            path: '/login',
+            builder: (BuildContext context, GoRouterState state) {
+              return const LoginPage();
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'register',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const RegisterPage();
+                },
+              ),
+            ],
+          ),
+        ],
+      ));
+
   //Data Sources
   getIt.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(
@@ -84,9 +124,14 @@ Future<void> init() async {
   getIt.registerLazySingleton<TextEditingController>(
       () => TextEditingController(),
       instanceName: 'passwordController');
-
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'fullNameController');
   //FormKeys
   getIt.registerLazySingleton<GlobalKey<FormState>>(
       () => GlobalKey<FormState>(),
       instanceName: 'loginFormKey');
+  getIt.registerLazySingleton<GlobalKey<FormState>>(
+      () => GlobalKey<FormState>(),
+      instanceName: 'registerFormKey');
 }
