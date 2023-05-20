@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:neefs/core/error/errors.dart';
 import 'package:neefs/core/util/validation.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
-import 'package:neefs/features/user/domain/usecases/login_usecase.dart' as l;
-import 'package:neefs/features/user/domain/usecases/register_usecase.dart' as r;
+import 'package:neefs/features/user/domain/usecases/login_usecase.dart';
+import 'package:neefs/features/user/domain/usecases/register_usecase.dart';
 
 part 'user_state.dart';
 
@@ -15,14 +15,14 @@ class UserCubit extends Cubit<UserState> {
     required this.loginUseCase,
     required this.registerUsecase,
   }) : super(UserInitial());
-  l.LoginUsecase loginUseCase;
-  r.RegisterUsecase registerUsecase;
+  LoginUsecase loginUseCase;
+  RegisterUsecase registerUsecase;
   bool pw = false;
   Future<void> login(String email, String password) async {
     emit(UserLoading());
     if (LoginValidation.isValid) {
-      final userOrFailure =
-          await loginUseCase.call(l.Params(email: email, password: password));
+      final userOrFailure = await loginUseCase
+          .call(LoginParams(email: email, password: password));
 
       if (userOrFailure is Right) {
         emit(UserLoginSuccessfull(user: userOrFailure.right));
@@ -40,7 +40,7 @@ class UserCubit extends Cubit<UserState> {
   Future<void> register(String fullName, String email, String password,
       String repeatPassword) async {
     emit(UserLoading());
-    final userOrFailure = await registerUsecase.call(r.Params(
+    final userOrFailure = await registerUsecase.call(RegisterParams(
         fullName: fullName,
         email: email,
         password: password,
