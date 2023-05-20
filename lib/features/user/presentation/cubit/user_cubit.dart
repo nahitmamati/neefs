@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
 import 'package:neefs/core/error/errors.dart';
+import 'package:neefs/core/util/validation.dart';
 import 'package:neefs/features/user/domain/entities/user.dart';
 import 'package:neefs/features/user/domain/usecases/login_usecase.dart' as l;
 import 'package:neefs/features/user/domain/usecases/register_usecase.dart' as r;
-import 'package:neefs/injection_container.dart';
 
 part 'user_state.dart';
 
@@ -17,11 +17,10 @@ class UserCubit extends Cubit<UserState> {
   }) : super(UserInitial());
   l.LoginUsecase loginUseCase;
   r.RegisterUsecase registerUsecase;
-
+  bool pw = false;
   Future<void> login(String email, String password) async {
     emit(UserLoading());
-    final formKey = getIt<GlobalKey<FormState>>(instanceName: "loginFormKey");
-    if (formKey.currentState!.validate()) {
+    if (LoginValidation.isValid) {
       final userOrFailure =
           await loginUseCase.call(l.Params(email: email, password: password));
 
@@ -34,7 +33,7 @@ class UserCubit extends Cubit<UserState> {
         emit(UserLoginFailed(failure: userOrFailure.left));
       }
     } else {
-      emit(UserLoginFailed(failure: ValidationFailure()));
+      emit(UserLoginValidationFailed(failure: ValidationFailure()));
     }
   }
 
@@ -53,5 +52,11 @@ class UserCubit extends Cubit<UserState> {
     } else {
       emit(UserRegisterFailed(failure: userOrFailure.left));
     }
+  }
+
+  void showPassword() {
+    pw = !pw;
+    print(pw);
+    emit(state);
   }
 }

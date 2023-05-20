@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:neefs/injection_container.dart';
 
@@ -12,8 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool pw = false;
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserState>(
@@ -36,6 +35,8 @@ class _LoginPageState extends State<LoginPage> {
                 state.failure.message!,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               )));
+        } else if (state is UserLoginValidationFailed) {
+          EasyLoading.dismiss();
         }
       },
       builder: (context, state) {
@@ -138,32 +139,40 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 16.0, right: 16, top: 10, bottom: 5),
-                        child: TextFormField(
-                          controller: getIt<TextEditingController>(
-                              instanceName: 'passwordController'),
-                          obscureText: pw,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password.';
-                            } else if (value.trim().length < 6) {
-                              return 'Password cannot be less than 6 characters.';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                pw = !pw;
+                        child: BlocBuilder<ObsCubit, bool>(
+                          builder: (context, state) {
+                            return TextFormField(
+                              controller: getIt<TextEditingController>(
+                                  instanceName: 'passwordController'),
+                              obscureText: state,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password.';
+                                } else if (value.trim().length < 6) {
+                                  return 'Password cannot be less than 6 characters.';
+                                }
+                                return null;
                               },
-                              icon: pw
-                                  ? const Icon(Icons.visibility_off_outlined)
-                                  : const Icon(Icons.remove_red_eye_outlined),
-                            ),
-                          ),
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<ObsCubit>()
+                                        .showPassword(!state);
+                                  },
+                                  icon: state
+                                      ? const Icon(
+                                          Icons.visibility_off_outlined)
+                                      : const Icon(
+                                          Icons.remove_red_eye_outlined),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Align(

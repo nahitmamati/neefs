@@ -13,6 +13,7 @@ import 'package:neefs/features/user/domain/entities/user.dart';
 import 'package:neefs/features/user/domain/repositories/user_repository.dart';
 import 'package:neefs/features/user/domain/usecases/login_usecase.dart';
 import 'package:neefs/features/user/domain/usecases/register_usecase.dart';
+import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 
 import 'core/util/color_schemes.dart';
@@ -75,7 +76,7 @@ Future<void> init() async {
       registerUsecase: getIt<RegisterUsecase>()));
   getIt.registerFactory<NewsCubit>(() => NewsCubit());
   getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
-
+  getIt.registerFactory<ObsCubit>(() => ObsCubit());
   //TextEditingControls
   getIt.registerLazySingleton<TextEditingController>(
       () => TextEditingController(),

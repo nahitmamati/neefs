@@ -16,6 +16,12 @@ class UserLoginLoaded extends UserState {}
 
 class UserRegisterLoaded extends UserState {}
 
+//Validation
+class UserLoginValidationFailed extends UserState {
+  const UserLoginValidationFailed({required this.failure});
+  final Failure failure;
+}
+
 //Failed
 class UserLoginFailed extends UserState {
   const UserLoginFailed({required this.failure});
