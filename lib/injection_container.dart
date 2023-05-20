@@ -83,4 +83,9 @@ Future<void> init() async {
   getIt.registerLazySingleton<TextEditingController>(
       () => TextEditingController(),
       instanceName: 'passwordController');
+
+  //FormKeys
+  getIt.registerLazySingleton<GlobalKey<FormState>>(
+      () => GlobalKey<FormState>(),
+      instanceName: 'loginFormKey');
 }
