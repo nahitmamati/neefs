@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neefs/core/network/network_info.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
+import 'package:neefs/features/news/presentation/pages/bottom_navigation_bar.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
+import 'package:neefs/features/news/presentation/pages/news_detail.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/data/datasources/user_local_datasource.dart';
 import 'package:neefs/features/user/data/datasources/user_remote_datasource.dart';
@@ -44,26 +47,30 @@ Future<void> init() async {
 
   //Router
   getIt.registerLazySingleton<GoRouter>(() => GoRouter(
-        initialLocation: '/home',
+        initialLocation: '/login',
         routes: <RouteBase>[
           GoRoute(
             path: '/login',
             builder: (BuildContext context, GoRouterState state) {
               return const LoginPage();
             },
-            routes: <RouteBase>[
-              GoRoute(
-                path: 'register',
-                builder: (BuildContext context, GoRouterState state) {
-                  return const RegisterPage();
-                },
-              ),
-            ],
+          ),
+          GoRoute(
+            path: '/register',
+            builder: (BuildContext context, GoRouterState state) {
+              return const RegisterPage();
+            },
           ),
           GoRoute(
             path: '/home',
             builder: (context, state) {
-              return const HomePage();
+              return const MyBottomNavigationBar();
+            },
+          ),
+          GoRoute(
+            path: '/newsDetail',
+            builder: (context, state) {
+              return  NewsDetail();
             },
           ),
         ],
@@ -142,4 +149,8 @@ Future<void> init() async {
   getIt.registerLazySingleton<GlobalKey<FormState>>(
       () => GlobalKey<FormState>(),
       instanceName: 'registerFormKey');
+  //CarouselSlider controller
+  getIt.registerLazySingleton<CarouselController>(
+          () => CarouselController(),
+      instanceName: 'carouselController');
 }

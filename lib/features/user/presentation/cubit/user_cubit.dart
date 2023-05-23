@@ -46,21 +46,19 @@ class UserCubit extends Cubit<UserState> {
           email: email,
           password: password,
           repeatPassword: repeatPassword));
-
-      print("printed $userOrFailure");
-      if (userOrFailure is User) {
+      print("printed ${userOrFailure.isLeft} ${userOrFailure.isRight}");
+      if (userOrFailure.isRight) {
         emit(UserRegisterSuccessfull(user: userOrFailure.right));
       } else {
         emit(UserRegisterFailed(failure: userOrFailure.left));
       }
     } else {
-      emit(UserRegisterValidationFailed(failure: ValidationFailure()));
+      emit(const UserRegisterValidationFailed(failure: ValidationFailure()));
     }
   }
 
   void showPassword() {
     pw = !pw;
-    print(pw);
     emit(state);
   }
 }

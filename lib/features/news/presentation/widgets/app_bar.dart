@@ -15,7 +15,9 @@ class MyAppBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: const Icon(Icons.menu_rounded)),
-          onPressed: () => Scaffold.of(context).openDrawer(),
+          onPressed: () {
+            //Scaffold.of(context).openDrawer();
+          },
         ),
       ),
       actions: [
@@ -23,9 +25,9 @@ class MyAppBar extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(Icons.search),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_none),
+        const Badge(
+          isLabelVisible: true,
+          child: Icon(Icons.notifications_none),
         ),
         const SizedBox(
           width: 15,

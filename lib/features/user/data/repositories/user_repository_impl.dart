@@ -43,8 +43,10 @@ class UserRepositoryImpl implements UserRepository {
       final userModel = await userRemoteDataSource.register(
           fullName, email, password, repeatPassword);
       await userLocalDataSource.putUser(userModel);
+      print("trydayım ");
       return Right(userModel);
     } on ServerException catch (e) {
+      print("exceptiondayım");
       return Left(ServerFailure(message: e.message));
     }
   }

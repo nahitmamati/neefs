@@ -21,6 +21,7 @@ class LoginPage extends StatelessWidget {
                 "Login successfull!",
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               )));
+          GoRouter.of(context).go("/home");
         } else if (state is UserLoading) {
           EasyLoading.show();
         } else if (state is UserLoginFailed) {
@@ -72,8 +73,9 @@ class LoginPage extends StatelessWidget {
                           width: 600,
                           height: 600,
                           decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                             borderRadius: BorderRadius.circular(400),
                           ),
                         ),
@@ -89,12 +91,14 @@ class LoginPage extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onPrimary),
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
                             ),
                             Text(
                               "Sign in to your Account",
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onPrimary),
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
                             ),
                           ],
                         ),
@@ -105,8 +109,8 @@ class LoginPage extends StatelessWidget {
                 Expanded(
                   flex: 75,
                   child: Form(
-                    key:
-                        getIt<GlobalKey<FormState>>(instanceName: 'loginFormKey'),
+                    key: getIt<GlobalKey<FormState>>(
+                        instanceName: 'loginFormKey'),
                     child: Column(
                       children: [
                         Padding(
@@ -192,14 +196,15 @@ class LoginPage extends StatelessWidget {
                           child: FilledButton(
                             onPressed: () async {
                               TextEditingController emailController =
-                                  await getIt<TextEditingController>(
+                                  getIt<TextEditingController>(
                                       instanceName: 'emailController');
 
                               TextEditingController passwordController =
-                                  await getIt<TextEditingController>(
+                                  getIt<TextEditingController>(
                                       instanceName: 'passwordController');
                               context.read<UserCubit>().login(
-                                  emailController.text, passwordController.text);
+                                  emailController.text,
+                                  passwordController.text);
                             },
                             child: Text(
                               "Login",
@@ -213,7 +218,7 @@ class LoginPage extends StatelessWidget {
                             const Text("Don't have an account?"),
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context).go('/login/register');
+                                GoRouter.of(context).push('/register');
                               },
                               child: Text(
                                 "Register",

@@ -218,15 +218,15 @@ class RegisterPage extends StatelessWidget {
                           child: FilledButton(
                             onPressed: () async {
                               TextEditingController fullNameController =
-                                  await getIt<TextEditingController>(
+                                  getIt<TextEditingController>(
                                       instanceName: 'fullNameController');
 
                               TextEditingController emailController =
-                                  await getIt<TextEditingController>(
+                                  getIt<TextEditingController>(
                                       instanceName: 'emailController');
 
                               TextEditingController passwordController =
-                                  await getIt<TextEditingController>(
+                                  getIt<TextEditingController>(
                                       instanceName: 'passwordController');
                               context.read<UserCubit>().register(
                                   fullNameController.text,
