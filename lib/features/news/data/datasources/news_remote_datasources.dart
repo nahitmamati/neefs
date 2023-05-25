@@ -25,16 +25,25 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<NewsModel>> loadNews(int page) async {
     List<NewsModel> news = [];
+    print("DİODAN ÖNCE");
     var dio = Dio();
-    var response = await dio.get("https://www.nginx.com/wp-json/wp/v2/posts?page=$page");
-    if (response.statusCode == 200) {
-      List<dynamic> temp = response.data;
-      for (var item in temp) {
-        news.add(NewsModel.fromJson(item));
-      }
-    } else {
-      throw "Veriler elime ulaşmadı :(";
+    print("DİODAN SONRA");
+    try {
+      var response = await dio.get("https://www.nginx.com/wp-json/wp/v2/posts?page=$page");
     }
+    catch (e){
+      print(e);
+    }
+    print("RESPONSEDAN SONRA");
+    // if (response.statusCode == 200) {
+    //   print("annen");
+    //   List<dynamic> temp = response.data;
+    //   for (var item in temp) {
+    //     news.add(NewsModel.fromJson(item));
+    //   }
+    // } else {
+    //   throw Exception("Server ERROR");
+    // }
     return news;
   }
 

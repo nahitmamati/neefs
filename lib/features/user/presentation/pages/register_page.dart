@@ -75,8 +75,9 @@ class RegisterPage extends StatelessWidget {
                           width: 600,
                           height: 600,
                           decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                             borderRadius: BorderRadius.circular(400),
                           ),
                         ),
@@ -87,12 +88,17 @@ class RegisterPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const SizedBox(height: 10,),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             IconButton(
                               onPressed: () {
                                 GoRouter.of(context).pop();
                               },
-                              icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary,),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                             ),
                             const Spacer(),
                             Padding(
@@ -102,7 +108,9 @@ class RegisterPage extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onPrimary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
                               ),
                             ),
                             Padding(
@@ -110,7 +118,9 @@ class RegisterPage extends StatelessWidget {
                               child: Text(
                                 "Create your account",
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.onPrimary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
                               ),
                             ),
                           ],
@@ -229,10 +239,11 @@ class RegisterPage extends StatelessWidget {
                                   getIt<TextEditingController>(
                                       instanceName: 'passwordController');
                               context.read<UserCubit>().register(
-                                  fullNameController.text,
-                                  emailController.text,
-                                  passwordController.text,
-                                  passwordController.text);
+                                    fullNameController.text,
+                                    emailController.text,
+                                    passwordController.text,
+                                    passwordController.text,
+                                  );
                             },
                             child: Text(
                               "Register",

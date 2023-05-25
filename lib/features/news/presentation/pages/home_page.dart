@@ -42,12 +42,13 @@ class HomePage extends StatelessWidget {
         if (state is NewsInitial) {
           print("Here");
         } else if (state is NewsLoading) {
-          print("Loading");
           EasyLoading.show();
+          print("Loading");
         } else if (state is NewsLoaded) {
-          print("Loaded");
           EasyLoading.dismiss();
+          print("Loaded");
         } else if (state is NewsFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Haber kalmadı usta")));
           print("Fail kardeşşim");
         }
       },
@@ -170,7 +171,12 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     controller: getIt<ScrollController>(
                         instanceName: 'scrollController'),
-                    child: getNews(models: context.read<NewsCubit>().news),
+                    child: Column(
+                      children: [
+                        getNews(models: context.read<NewsCubit>().news),
+                        state is NewsLoading ? const CircularProgressIndicator() : const SizedBox(),
+                      ],
+                    ),
                   ),
                 ),
               ),

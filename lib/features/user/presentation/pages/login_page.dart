@@ -207,7 +207,7 @@ class LoginPage extends StatelessWidget {
                                     emailController.text,
                                     passwordController.text,
                                   );
-                              context.read<NewsCubit>().loadNews();
+                              await context.read<NewsCubit>().loadNews();
                             },
                             child: Text(
                               "Login",
