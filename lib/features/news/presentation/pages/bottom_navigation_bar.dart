@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
+import 'package:neefs/features/profile/presentation/pages/profile_page.dart';
 
-class MyBottomNavigationBar extends StatelessWidget {
+final pages = [HomePage(), HomePage(), ProfilePage()];
+int index = 0;
+
+class MyBottomNavigationBar extends StatefulWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
 
+  @override
+  State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          currentIndex: index,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
@@ -26,8 +37,13 @@ class MyBottomNavigationBar extends StatelessWidget {
               label: "",
             ),
           ],
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
+          },
         ),
-        body: HomePage(),
+        body: pages[index],
       ),
     );
   }
