@@ -21,7 +21,7 @@ class RegisterPage extends StatelessWidget {
                 "Register successfull!",
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               )));
-          Future.delayed(Duration(seconds: 2))
+          Future.delayed(const Duration(seconds: 2))
               .then((value) => GoRouter.of(context).pop());
         } else if (state is UserLoading) {
           EasyLoading.show();

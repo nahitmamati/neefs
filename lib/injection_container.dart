@@ -7,7 +7,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neefs/core/network/network_info.dart';
+import 'package:neefs/features/news/data/models/news_model.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
+import 'package:neefs/features/news/presentation/cubit/slider_cubit.dart';
 import 'package:neefs/features/news/presentation/pages/bottom_navigation_bar.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
 import 'package:neefs/features/news/presentation/pages/news_detail.dart';
@@ -68,9 +70,11 @@ Future<void> init() async {
             },
           ),
           GoRoute(
-            path: '/newsDetail',
+            path: '/news_detail',
             builder: (context, state) {
-              return  NewsDetail();
+              return NewsDetail(
+                newsModel: state.extra as NewsModel,
+              );
             },
           ),
         ],
@@ -132,6 +136,8 @@ Future<void> init() async {
   getIt.registerFactory<NewsCubit>(() => NewsCubit());
   getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
   getIt.registerFactory<ObsCubit>(() => ObsCubit());
+  getIt.registerFactory<SliderIndexCubit>(() => SliderIndexCubit());
+
   //TextEditingControls
   getIt.registerLazySingleton<TextEditingController>(
       () => TextEditingController(),
@@ -150,7 +156,9 @@ Future<void> init() async {
       () => GlobalKey<FormState>(),
       instanceName: 'registerFormKey');
   //CarouselSlider controller
-  getIt.registerLazySingleton<CarouselController>(
-          () => CarouselController(),
+  getIt.registerLazySingleton<CarouselController>(() => CarouselController(),
       instanceName: 'carouselController');
+  //Scroll view controller
+  getIt.registerLazySingleton<ScrollController>(() => ScrollController(),
+      instanceName: 'scrollController');
 }

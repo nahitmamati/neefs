@@ -27,7 +27,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             ),
           ],
         ),
-        body:  HomePage(),
+        body: HomePage(),
       ),
     );
   }

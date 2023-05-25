@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
+import 'package:neefs/features/news/presentation/cubit/slider_cubit.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
@@ -36,6 +37,9 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => getIt<ObsCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<SliderIndexCubit>(),
           ),
         ],
         child: MaterialApp.router(
