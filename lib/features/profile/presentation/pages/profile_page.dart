@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neefs/features/profile/presentation/cubit/language_cubit.dart';
 import '../../../../core/util/localization.dart';
 
 class ThemeProvider extends ChangeNotifier {
@@ -22,8 +22,6 @@ class ProfilePage extends StatefulWidget {
 
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool switchOn = false;
-  bool switchOn2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +34,14 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Switch(
-                  value: switchOn,
+                  value: context.read<LanguageCubit>().themeSwitch,
                   onChanged: (value) {
                     setState(() {
-                      switchOn = value;
-                      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme(value);
+                      context.read<LanguageCubit>().changeThemeMode(mode: value);
                     });
                   },
                 ),
-                Text(switchOn ? AppLocalizations.of(context).getTranslate("dark_mode") : AppLocalizations.of(context).getTranslate("light_mode")),
+                Text(context.read<LanguageCubit>().themeSwitch ? AppLocalizations.of(context).getTranslate("dark_mode") : AppLocalizations.of(context).getTranslate("light_mode")),
               ],
             ),
             const SizedBox(height: 20,),
@@ -53,15 +49,14 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Switch(
-                  value: switchOn2,
+                  value: context.read<LanguageCubit>().languageSwitch,
                   onChanged: (value) {
                     setState(() {
-                      switchOn2 = value;
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Bu özelliğimiz geliştirme aşamasında")));
+                      context.read<LanguageCubit>().changeLanguage(lang: !value ? "en": "tr",);
                     });
                   },
                 ),
-                Text(switchOn2 ? "tr" : "en"),
+                Text(context.read<LanguageCubit>().languageSwitch ? "tr" : "en"),
               ],
             )
           ],

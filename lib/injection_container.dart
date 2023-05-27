@@ -13,6 +13,8 @@ import 'package:neefs/features/news/presentation/cubit/slider_cubit.dart';
 import 'package:neefs/features/news/presentation/pages/bottom_navigation_bar.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
 import 'package:neefs/features/news/presentation/pages/news_detail.dart';
+import 'package:neefs/features/profile/presentation/cubit/language_cubit.dart';
+import 'package:neefs/features/profile/presentation/cubit/language_state.dart';
 import 'package:neefs/features/tickets/data/datasources/tickets_remote_datasource.dart';
 import 'package:neefs/features/tickets/data/models/ticket_model.dart';
 import 'package:neefs/features/tickets/data/repositories/ticket_repository_impl.dart';
@@ -28,6 +30,7 @@ import 'package:neefs/features/user/domain/usecases/login_usecase.dart';
 import 'package:neefs/features/user/domain/usecases/register_usecase.dart';
 import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/util/color_schemes.dart';
 import 'core/util/constants.dart';
@@ -153,6 +156,9 @@ Future<void> init() async {
   getIt.registerLazySingleton<RegisterUsecase>(
       () => RegisterUsecase(userRepository: getIt<UserRepository>()));
 
+  getIt.registerLazySingleton<LanguageState>(
+      () => LanguageState(darkMode: false));
+
   //Cubits
   getIt.registerFactory<UserCubit>(() => UserCubit(
       loginUseCase: getIt<LoginUsecase>(),
@@ -161,6 +167,8 @@ Future<void> init() async {
   getIt.registerFactory<TicketsCubit>(() => TicketsCubit());
   getIt.registerFactory<ObsCubit>(() => ObsCubit());
   getIt.registerFactory<SliderIndexCubit>(() => SliderIndexCubit());
+  getIt.registerFactory<LanguageCubit>(
+      () => LanguageCubit(getIt<LanguageState>()));
 
   //TextEditingControls
   getIt.registerLazySingleton<TextEditingController>(

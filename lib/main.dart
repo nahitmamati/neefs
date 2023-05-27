@@ -7,12 +7,14 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
 import 'package:neefs/features/news/presentation/cubit/slider_cubit.dart';
+import 'package:neefs/features/profile/presentation/cubit/language_cubit.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'core/util/localization.dart';
+import 'features/profile/presentation/cubit/language_state.dart';
 import 'features/profile/presentation/pages/profile_page.dart';
 import 'injection_container.dart' as locater;
 import 'injection_container.dart';
@@ -46,29 +48,34 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<SliderIndexCubit>(),
         ),
+        BlocProvider(
+          create: (context) => getIt<LanguageCubit>(),
+        ),
       ],
-      child: ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
-        builder: (context, child) {
-          return MaterialApp.router(
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en', ''),
-              Locale('tr', ''),
-            ],
-            locale: const Locale("en"),
-            debugShowCheckedModeBanner: false,
-            theme: getIt<ThemeData>(instanceName: 'lightTheme'),
-            darkTheme: getIt<ThemeData>(instanceName: 'darkTheme'),
-            themeMode: Provider.of<ThemeProvider>(context).themeMode,
-            routerConfig: getIt<GoRouter>(),
-            builder: EasyLoading.init(),
-          );
-        },
+      child: BlocProvider(
+        create: (context) => getIt<LanguageCubit>(),
+        child: BlocBuilder<LanguageCubit, LanguageState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLanguages
+                  .map((e) => Locale(e, ""))
+                  .toList(),
+              locale: Locale(state.language, ""),
+              debugShowCheckedModeBanner: false,
+              theme: getIt<ThemeData>(instanceName: 'lightTheme'),
+              darkTheme: getIt<ThemeData>(instanceName: 'darkTheme'),
+              themeMode: state.darkMode ? ThemeMode.dark : ThemeMode.light,
+              routerConfig: getIt<GoRouter>(),
+              builder: EasyLoading.init(),
+            );
+          },
+        ),
       ),
     );
   }

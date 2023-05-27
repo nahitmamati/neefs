@@ -1,7 +1,7 @@
 {
     "all_tickets" : "All Tickets",
-    "recommendation_news" : "Recommendation News",
-    "breaking_news" : "Breking News",
+    "recommendation_news" : "Recommendations",
+    "breaking_news" : "Breaking News",
     "view_all" : "View All",
     "light_mode" : "Light Mode",
     "dark_mode" : "Dark Mode",
@@ -17,7 +17,7 @@
     "full_name" : "Full Name",
     "i_have_account" : "I have an account",
     "title" : "Title",
-    "priorty" : "Priorty",
+    "priorty" : "Priority",
     "high" : "High",
     "status" : "Status",
     "open" : "OPEN",
