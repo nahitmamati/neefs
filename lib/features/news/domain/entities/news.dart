@@ -30,13 +30,6 @@ class News extends Equatable {
       required this.author});
 
   @override
-  List<Object?> get props => [
-        title,
-        date,
-        content,
-        description,
-        type,
-        image,
-        author,
-      ];
+  List<Object?> get props =>
+      [title, date, content, description, type, image, author];
 }

@@ -13,7 +13,12 @@ import 'package:neefs/features/news/presentation/cubit/slider_cubit.dart';
 import 'package:neefs/features/news/presentation/pages/bottom_navigation_bar.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
 import 'package:neefs/features/news/presentation/pages/news_detail.dart';
+import 'package:neefs/features/tickets/data/datasources/tickets_remote_datasource.dart';
+import 'package:neefs/features/tickets/data/models/ticket_model.dart';
+import 'package:neefs/features/tickets/data/repositories/ticket_repository_impl.dart';
+import 'package:neefs/features/tickets/domain/repositories/ticket_repository.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
+import 'package:neefs/features/tickets/presentation/pages/ticket_screen.dart';
 import 'package:neefs/features/user/data/datasources/user_local_datasource.dart';
 import 'package:neefs/features/user/data/datasources/user_remote_datasource.dart';
 import 'package:neefs/features/user/data/repositories/user_repository_impl.dart';
@@ -48,37 +53,47 @@ Future<void> init() async {
     ..dismissOnTap = false;
 
   //Router
-  getIt.registerLazySingleton<GoRouter>(() => GoRouter(
-        initialLocation: '/login',
-        routes: <RouteBase>[
-          GoRoute(
-            path: '/login',
-            builder: (BuildContext context, GoRouterState state) {
-              return const LoginPage();
-            },
-          ),
-          GoRoute(
-            path: '/register',
-            builder: (BuildContext context, GoRouterState state) {
-              return const RegisterPage();
-            },
-          ),
-          GoRoute(
-            path: '/home',
-            builder: (context, state) {
-              return const MyBottomNavigationBar();
-            },
-          ),
-          GoRoute(
-            path: '/news_detail',
-            builder: (context, state) {
-              return NewsDetail(
-                newsModel: state.extra as NewsModel,
-              );
-            },
-          ),
-        ],
-      ));
+  getIt.registerLazySingleton<GoRouter>(
+    () => GoRouter(
+      initialLocation: '/login',
+      routes: <RouteBase>[
+        GoRoute(
+          path: '/login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginPage();
+          },
+        ),
+        GoRoute(
+          path: '/register',
+          builder: (BuildContext context, GoRouterState state) {
+            return const RegisterPage();
+          },
+        ),
+        GoRoute(
+          path: '/home',
+          builder: (context, state) {
+            return const MyBottomNavigationBar();
+          },
+        ),
+        GoRoute(
+          path: '/news_detail',
+          builder: (context, state) {
+            return NewsDetail(
+              newsModel: state.extra as NewsModel,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/ticket_screen',
+          builder: (context, state) {
+            return TicketScreen(
+              data: state.extra as TicketModel,
+            );
+          },
+        ),
+      ],
+    ),
+  );
 
   //Data Sources
   getIt.registerLazySingleton<UserRemoteDataSource>(
@@ -88,6 +103,9 @@ Future<void> init() async {
   getIt.registerLazySingleton<UserLocalDataSource>(
     () => UserLocalDataSourceImpl(
         userAdaptor: UserAdapter(), walletAdapter: WalletAdapter()),
+  );
+  getIt.registerLazySingleton<TicketRemoteDataSource>(
+    () => TicketRemoteDataSourceImpl(),
   );
 
   //Secure Storage
@@ -123,6 +141,12 @@ Future<void> init() async {
         networkInfo: getIt<NetworkInfo>()),
   );
 
+  getIt.registerLazySingleton<TicketRepository>(
+    () => TicketRepositoryImpl(
+        ticketRemoteDataSource: getIt<TicketRemoteDataSource>(),
+        networkInfo: getIt<NetworkInfo>()),
+  );
+
   //Usecases
   getIt.registerLazySingleton<LoginUsecase>(
       () => LoginUsecase(userRepository: getIt<UserRepository>()));
@@ -148,6 +172,18 @@ Future<void> init() async {
   getIt.registerLazySingleton<TextEditingController>(
       () => TextEditingController(),
       instanceName: 'fullNameController');
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'ticketTopicController');
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'ticketTitleController');
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'ticketMessageController');
+  getIt.registerLazySingleton<TextEditingController>(
+      () => TextEditingController(),
+      instanceName: 'ticketRespondController');
   //FormKeys
   getIt.registerLazySingleton<GlobalKey<FormState>>(
       () => GlobalKey<FormState>(),

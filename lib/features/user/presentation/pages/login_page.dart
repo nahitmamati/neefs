@@ -27,12 +27,15 @@ class LoginPage extends StatelessWidget {
           EasyLoading.show();
         } else if (state is UserLoginFailed) {
           EasyLoading.dismiss();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
               backgroundColor: Theme.of(context).colorScheme.errorContainer,
               content: Text(
                 state.failure.message!,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
-              )));
+              ),
+            ),
+          );
         } else if (state is UserLoginValidationFailed) {
           EasyLoading.dismiss();
         }
@@ -48,11 +51,12 @@ class LoginPage extends StatelessWidget {
                   child: Stack(
                     children: [
                       SizedBox(
-                          height: double.infinity,
-                          width: double.infinity,
-                          child: Container(
-                            color: Theme.of(context).colorScheme.primary,
-                          )),
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Container(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
                       Positioned(
                         bottom: 1,
                         right: -20,

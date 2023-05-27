@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neefs/features/news/presentation/pages/home_page.dart';
 import 'package:neefs/features/profile/presentation/pages/profile_page.dart';
+import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
+import 'package:neefs/features/tickets/presentation/pages/tickets_screen.dart';
+import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 
-final pages = [HomePage(), HomePage(), ProfilePage()];
+final pages = [HomePage(), TicketsScreen(), ProfilePage()];
 int index = 0;
 
 class MyBottomNavigationBar extends StatefulWidget {
@@ -37,10 +41,18 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               label: "",
             ),
           ],
-          onTap: (value) {
+          onTap: (value) async {
             setState(() {
               index = value;
             });
+            if (index == 1) {
+              await context.read<TicketsCubit>().loadTickets(
+                    token: (BlocProvider.of<UserCubit>(context).state
+                            as UserLoginSuccessfull)
+                        .user
+                        .token!,
+                  );
+            }
           },
         ),
         body: pages[index],

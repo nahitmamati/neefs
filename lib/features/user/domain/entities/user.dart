@@ -22,6 +22,8 @@ class User extends Equatable {
   final String? updatedAt;
   @HiveField(8)
   final List<Wallet?> wallets;
+  @HiveField(9)
+  final String? token;
   const User(
       {required this.name,
       required this.phone,
@@ -31,7 +33,8 @@ class User extends Equatable {
       required this.emailVerifiedAt,
       required this.createdAt,
       required this.updatedAt,
-      required this.wallets});
+      required this.wallets,
+      required this.token});
   @override
   List<Object?> get props => [
         name,
@@ -42,7 +45,8 @@ class User extends Equatable {
         emailVerifiedAt,
         createdAt,
         updatedAt,
-        wallets
+        wallets,
+        token
       ];
 }
 

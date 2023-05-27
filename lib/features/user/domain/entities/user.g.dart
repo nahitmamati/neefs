@@ -26,13 +26,14 @@ class UserAdapter extends TypeAdapter<User> {
       createdAt: fields[6] as String?,
       updatedAt: fields[7] as String?,
       wallets: (fields[8] as List).cast<Wallet?>(),
+      token: fields[9] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(7)
       ..write(obj.updatedAt)
       ..writeByte(8)
-      ..write(obj.wallets);
+      ..write(obj.wallets)
+      ..writeByte(9)
+      ..write(obj.token);
   }
 
   @override

@@ -11,6 +11,7 @@ class UserModel extends User {
     required String? createdAt,
     required String? updatedAt,
     required List<WalletModel?> wallets,
+    required String? token,
   }) : super(
           name: name,
           phone: phone,
@@ -21,6 +22,7 @@ class UserModel extends User {
           createdAt: createdAt,
           updatedAt: updatedAt,
           wallets: wallets,
+          token: token,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class UserModel extends User {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       wallets: wallets,
+      token: json['token'],
     );
   }
 

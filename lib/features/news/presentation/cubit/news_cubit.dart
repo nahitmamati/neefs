@@ -18,11 +18,8 @@ class NewsCubit extends Cubit<NewsState> {
     try {
       news.addAll(await source.loadNews(page));
       emit(NewsLoaded());
-    }
-    on Exception catch (e) {
+    } on Exception catch (e) {
       emit(NewsFailed());
     }
   }
-
-
 }

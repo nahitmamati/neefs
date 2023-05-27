@@ -24,7 +24,7 @@ class UserCubit extends Cubit<UserState> {
       final userOrFailure = await loginUseCase
           .call(LoginParams(email: email, password: password));
 
-      if (userOrFailure is Right) {
+      if (userOrFailure.isRight) {
         emit(UserLoginSuccessfull(user: userOrFailure.right));
       } else {
         final except = userOrFailure.left;

@@ -8,3 +8,9 @@ abstract class TicketsState extends Equatable {
 }
 
 class TicketsInitial extends TicketsState {}
+
+class TicketsLoading extends TicketsState {}
+
+class TicketsLoaded extends TicketsState {}
+
+class TicketsFailed extends TicketsState {}

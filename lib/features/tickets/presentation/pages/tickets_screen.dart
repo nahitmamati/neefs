@@ -1,244 +1,129 @@
 import 'package:flutter/material.dart';
-import 'package:test/ticket_data.dart';
-import 'package:test/ticket_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:neefs/features/tickets/data/models/ticket_model.dart';
+import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
+import 'package:neefs/features/tickets/presentation/widgets/add_ticket_widget.dart';
+import 'package:neefs/features/tickets/presentation/widgets/ticket_widget.dart';
 
-List<TicketData> datas = [
-  TicketData(
-      header: "Vintage table lamp - Out of stocks?",
-      description:
-          "Ya sen ne anlatıyon be abla, gözünü seveyim be abi. Ya sen ne anlatıyon be abla, gözünü seveyim be abi. Ya sen ne anlatıyon be abla, gözünü seveyim be abi.",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: false,
-      priority: Priority.low),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.normal),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-  TicketData(
-      header: "Vintage table lamp - Out of stock?",
-      description: "Is vintage table lamp out of stock?",
-      assignee: "Ertuğrul Faruk Pişkin",
-      reporter: "Yunus Çavuşoğlu",
-      date: "06/03/2023",
-      number: 123,
-      status: true,
-      priority: Priority.high),
-];
-List<TicketData> original = datas;
-
-class TicketsScreen extends StatefulWidget {
-  const TicketsScreen({super.key});
-
-  @override
-  State<TicketsScreen> createState() => _TicketsScreenState();
-}
-
-class _TicketsScreenState extends State<TicketsScreen> {
-  bool searchActive = false;
+class TicketsScreen extends StatelessWidget {
   final ScrollController controller = ScrollController();
+
+  TicketsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 246, 248, 252),
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 200,
-            color: const Color.fromARGB(255, 34, 129, 254),
-          ),
-          Container(),
-          if (searchActive)
-            Positioned(
-              top: 120,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: TextField(
-                  onChanged: (value) {
-                    var result = original.map((e) {
-                      if (e.description.contains(value)) return e;
-                    }).toList();
-                    result.removeWhere((element) => element == null);
-                    datas = List.from(result);
-                    setState(() {});
+    return BlocConsumer<TicketsCubit, TicketsState>(
+      listener: (context, state) {
+        if (state is TicketsInitial) {
+          EasyLoading.show();
+        } else if (state is TicketsLoading) {
+          print("Yükleniyor reis bekle");
+        } else if (state is TicketsLoaded) {
+          print(context.read<TicketsCubit>().tickets.length);
+          EasyLoading.dismiss();
+        } else if (state is TicketsFailed) {
+          print("Fail oldu bizim TicketState");
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: Stack(
+            children: [
+              Container(
+                color: Theme.of(context).colorScheme.primary,
+                width: double.infinity,
+                height: 200,
+              ),
+              Container(),
+              Positioned(
+                top: 110,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: ListView.separated(
+                  controller: controller,
+                  scrollDirection: Axis.vertical,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: context.read<TicketsCubit>().tickets.length,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  itemBuilder: (context, index) {
+                    return TicketWidget(
+                      data: context.read<TicketsCubit>().tickets[index],
+                    );
                   },
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 20);
+                  },
                 ),
               ),
-            ),
-          Positioned(
-            top: !searchActive ? 110 : 200,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: ListView.separated(
-              controller: controller,
-              scrollDirection: Axis.vertical,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: datas.length,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-              itemBuilder: (context, index) {
-                return Ticket(data: datas[index]);
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 20);
-              },
-            ),
-          ),
-          Positioned(
-            top: 70,
-            left: 20,
-            right: 20,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "All Tickets",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Row(
+              Positioned(
+                top: 70,
+                left: 20,
+                right: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          controller.animateTo(
-                            0,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.fastOutSlowIn,
-                          );
-                          searchActive = !searchActive;
-                          datas = original;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 30,
+                    Text(
+                      "All Tickets",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.swap_vert,
-                        color: Colors.white,
-                        size: 30,
-                      ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.search,
+                            size: 30,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.swap_vert,
+                            size: 30,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return const AddTicketWidget();
+                },
+                isScrollControlled: true,
+              );
+            },
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 2,
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+              ),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Icon(
+              Icons.add,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.blue[100],
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 2,
-            color: Color.fromARGB(255, 34, 129, 254),
-          ),
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 34, 129, 254),
-        ),
-      ),
+        );
+      },
     );
   }
 }
