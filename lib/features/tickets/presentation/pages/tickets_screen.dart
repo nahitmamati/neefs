@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:neefs/core/util/localization.dart';
 import 'package:neefs/features/tickets/data/models/ticket_model.dart';
 import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/tickets/presentation/widgets/add_ticket_widget.dart';
@@ -67,7 +68,7 @@ class TicketsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "All Tickets",
+                      AppLocalizations.of(context).getTranslate("all_tickets"),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 26,

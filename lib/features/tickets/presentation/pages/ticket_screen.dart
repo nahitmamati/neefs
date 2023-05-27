@@ -6,49 +6,18 @@ import 'package:neefs/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:neefs/injection_container.dart';
 
-List<TicketModel> datas = [
-  TicketModel(
-    id: 100,
-    title: "Annen",
-    status: "pending",
-    topic: "Annen",
-    createdAt: "03/08/2002",
-    updatedAt: "04/08/2003",
-  ),
-  TicketModel(
-    id: 100,
-    title: "Annen",
-    status: "pending",
-    topic: "Annen",
-    createdAt: "03/08/2002",
-    updatedAt: "04/08/2003",
-  ),
-  TicketModel(
-    id: 100,
-    title: "Annen",
-    status: "pending",
-    topic: "Annen",
-    createdAt: "03/08/2002",
-    updatedAt: "04/08/2003",
-  ),
-  TicketModel(
-    id: 100,
-    title: "Annen",
-    status: "pending",
-    topic: "Annen",
-    createdAt: "03/08/2002",
-    updatedAt: "04/08/2003",
-  ),
-];
+import '../../../../core/util/localization.dart';
 
 class TicketScreen extends StatelessWidget {
   final TicketModel data;
+
   const TicketScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           elevation: 0,
@@ -57,7 +26,12 @@ class TicketScreen extends StatelessWidget {
               Icons.arrow_back,
               size: 30,
             ),
-            onPressed: () => GoRouter.of(context).pop(),
+            onPressed: () {
+              getIt<TextEditingController>(
+                      instanceName: 'ticketRespondController')
+                  .clear();
+              GoRouter.of(context).pop();
+            },
           ),
           title: Row(
             children: [
@@ -76,7 +50,9 @@ class TicketScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    data.status == "pending" ? "OPEN" : "CLOSED",
+                    data.status == "pending"
+                        ? AppLocalizations.of(context).getTranslate("open")
+                        : AppLocalizations.of(context).getTranslate("close"),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -135,15 +111,20 @@ class TicketScreen extends StatelessWidget {
                                       as UserLoginSuccessfull)
                                   .user
                                   .name,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const TextSpan(
-                              text: " reported an issue",
+                            TextSpan(
+                              text: AppLocalizations.of(context)
+                                  .getTranslate("reported"),
                               style: TextStyle(
                                 fontSize: 16,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -154,10 +135,13 @@ class TicketScreen extends StatelessWidget {
                         maxLines: 2,
                         text: TextSpan(
                           children: [
-                            const TextSpan(
-                              text: "Issued at: ",
+                            TextSpan(
+                              text: AppLocalizations.of(context)
+                                  .getTranslate("issued"),
                               style: TextStyle(
                                 fontSize: 16,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -167,8 +151,10 @@ class TicketScreen extends StatelessWidget {
                                   .user
                                   .createdAt!
                                   .substring(0, 10),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -184,7 +170,7 @@ class TicketScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.secondaryContainer,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),
@@ -210,7 +196,6 @@ class TicketScreen extends StatelessWidget {
                                   const Text(
                                     "Keyvan Arasteh",
                                     style: TextStyle(
-                                      color: Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -219,7 +204,6 @@ class TicketScreen extends StatelessWidget {
                                     DateTime.now().toString().substring(0, 10),
                                     style: const TextStyle(
                                       fontSize: 14,
-                                      color: Colors.black,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -243,15 +227,19 @@ class TicketScreen extends StatelessWidget {
                             return null;
                           },
                           decoration: InputDecoration(
-                            labelText: "Message",
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelText: AppLocalizations.of(context)
+                                .getTranslate("message"),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.red),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                           ),
                         ),
@@ -261,9 +249,6 @@ class TicketScreen extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           child: FilledButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Theme.of(context).colorScheme.background)),
                             onPressed: () async {
                               var controller = getIt<TextEditingController>(
                                   instanceName: 'ticketRespondController');
@@ -271,8 +256,8 @@ class TicketScreen extends StatelessWidget {
                               if (controller.text.isNotEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content:
-                                        Text("Ticket is reponded successfuly"),
+                                    content: Text(
+                                        "Ticket is responded successfully"),
                                   ),
                                 );
 
@@ -301,7 +286,6 @@ class TicketScreen extends StatelessWidget {
                             },
                             child: const Text(
                               "Respond",
-                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         ),

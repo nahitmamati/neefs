@@ -6,6 +6,8 @@ import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:neefs/injection_container.dart';
 
+import '../../../../core/util/localization.dart';
+
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -104,7 +106,7 @@ class RegisterPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                "Register",
+                                AppLocalizations.of(context).getTranslate("create_your_account"),
                                 style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
@@ -116,7 +118,7 @@ class RegisterPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                "Create your account",
+                                AppLocalizations.of(context).getTranslate("create_your_account"),
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -149,7 +151,7 @@ class RegisterPage extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              labelText: "Full Name",
+                              labelText: AppLocalizations.of(context).getTranslate("full_name"),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -173,7 +175,7 @@ class RegisterPage extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              labelText: "Email",
+                              labelText: AppLocalizations.of(context).getTranslate("email"),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -198,7 +200,7 @@ class RegisterPage extends StatelessWidget {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Password",
+                                  labelText: AppLocalizations.of(context).getTranslate("password"),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -246,7 +248,7 @@ class RegisterPage extends StatelessWidget {
                                   );
                             },
                             child: Text(
-                              "Register",
+                              AppLocalizations.of(context).getTranslate("register"),
                             ),
                           ),
                         ),
@@ -254,13 +256,13 @@ class RegisterPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("I have an account? "),
+                            Text("${AppLocalizations.of(context).getTranslate("i_have_account")}?"),
                             TextButton(
                               onPressed: () {
                                 GoRouter.of(context).pop();
                               },
                               child: Text(
-                                "Login",
+                                AppLocalizations.of(context).getTranslate("login"),
                               ),
                             ),
                           ],

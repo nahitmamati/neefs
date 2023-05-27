@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   #4 state management
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
@@ -40,6 +41,10 @@ dependencies:
   html: ^0.15.3
   provider: ^6.0.5
   flutter_slidable: ^3.0.0
+  flutter_localization: ^0.1.11
+  shared_preferences: ^2.1.1
+
+
 
 dev_dependencies:
   flutter_test:
@@ -53,3 +58,4 @@ flutter:
 
   assets:
     - assets/reis.jpg
+    - assets/lang/

@@ -1,5 +1,5 @@
 {
-    "all_Tickets" : "Tüm Biletler",
+    "all_tickets" : "Tüm Biletler",
     "recommendation_news" : "Önerilen Haberler",
     "breaking_news" : "Son Dakika Haberleri",
     "view_all" : "Tümünü Gör",
@@ -22,5 +22,8 @@
     "status" : "Durum",
     "open" : "Açık",
     "close" : "Kapalı",
-    "message" : "Mesaj"
+    "message" : "Mesaj",
+    "login_success" : "Başarıyla Giriş Yapıldı",
+    "reported" : "bi sorun bildirdi",
+    "issued": "Bildirilme tarihi: "
 }

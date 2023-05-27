@@ -23,7 +23,6 @@ class TicketsCubit extends Cubit<TicketsState> {
 
       if (result.isRight) {
         tickets = result.right;
-        print("tickets length: ${tickets.length}");
         emit(TicketsLoaded());
       } else {
         emit(TicketsFailed());

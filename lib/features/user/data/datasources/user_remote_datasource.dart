@@ -40,10 +40,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     try {
       final response = await dio.post(endpoint, data: formData);
       if (response.statusCode == 200 && response.data['success'] == true) {
-        print("response if : $response");
         return UserModel.fromJson(response.data);
       } else {
-        print("response else : $response");
         throw ServerException(
             message: response.statusCode != 200
                 ? "Server Error : ${response.statusCode.toString()}"

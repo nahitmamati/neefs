@@ -31,12 +31,9 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<NewsModel>> loadNews(int page) async {
     List<NewsModel> news = [];
-    print("DİODAN ÖNCE");
     var dio = Dio();
-    print("DİODAN SONRA");
     var response =
         await dio.get("https://www.nginx.com/wp-json/wp/v2/posts?page=$page");
-    print("RESPONSEDAN SONRA");
     if (response.statusCode == 200) {
       List<dynamic> temp = response.data;
       for (var item in temp) {

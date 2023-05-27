@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neefs/core/util/localization.dart';
 import 'package:neefs/features/news/presentation/cubit/news_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               content: Text(
-                "Login successfull!",
+                "${AppLocalizations.of(context).getTranslate("login_success")}!",
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               )));
           GoRouter.of(context).go("/home");
@@ -92,16 +93,10 @@ class LoginPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Sign in to your\nAccount",
+                              AppLocalizations.of(context).getTranslate("sign_into"),
                               style: TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary),
-                            ),
-                            Text(
-                              "Sign in to your Account",
-                              style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.onPrimary),
                             ),
@@ -135,7 +130,7 @@ class LoginPage extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              labelText: "Email",
+                              labelText: AppLocalizations.of(context).getTranslate("email"),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -160,7 +155,7 @@ class LoginPage extends StatelessWidget {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Password",
+                                  labelText: AppLocalizations.of(context).getTranslate("password"),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -186,8 +181,7 @@ class LoginPage extends StatelessWidget {
                           child: TextButton(
                             onPressed: () {},
                             child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(),
+                              "${AppLocalizations.of(context).getTranslate("forgot_pw")}?",
                             ),
                           ),
                         ),
@@ -214,7 +208,7 @@ class LoginPage extends StatelessWidget {
                               await context.read<NewsCubit>().loadNews();
                             },
                             child: Text(
-                              "Login",
+                              AppLocalizations.of(context).getTranslate("login"),
                             ),
                           ),
                         ),
@@ -222,13 +216,13 @@ class LoginPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account?"),
+                            Text("${AppLocalizations.of(context).getTranslate("dont_account")}?"),
                             TextButton(
                               onPressed: () {
                                 GoRouter.of(context).push('/register');
                               },
                               child: Text(
-                                "Register",
+                                AppLocalizations.of(context).getTranslate("register"),
                               ),
                             ),
                           ],

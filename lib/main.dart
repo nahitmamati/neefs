@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -11,6 +12,7 @@ import 'package:neefs/features/user/presentation/cubit/obs_cubit.dart';
 import 'package:neefs/features/user/presentation/cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'core/util/localization.dart';
 import 'features/profile/presentation/pages/profile_page.dart';
 import 'injection_container.dart' as locater;
 import 'injection_container.dart';
@@ -49,6 +51,16 @@ class MainApp extends StatelessWidget {
         create: (context) => ThemeProvider(),
         builder: (context, child) {
           return MaterialApp.router(
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('tr', ''),
+            ],
+            locale: const Locale("en"),
             debugShowCheckedModeBanner: false,
             theme: getIt<ThemeData>(instanceName: 'lightTheme'),
             darkTheme: getIt<ThemeData>(instanceName: 'darkTheme'),

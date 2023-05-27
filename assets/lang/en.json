@@ -1,12 +1,12 @@
 {
-    "all_Tickets" : "All Tickets",
+    "all_tickets" : "All Tickets",
     "recommendation_news" : "Recommendation News",
     "breaking_news" : "Breking News",
     "view_all" : "View All",
     "light_mode" : "Light Mode",
     "dark_mode" : "Dark Mode",
     "topic" : "Topic",
-    "sign_into" : "Sign in to your accunt",
+    "sign_into" : "Sign in to your\nAccount",
     "register" : "Register",
     "login" : "Login",
     "create_your_account" : "Create your account",
@@ -20,7 +20,10 @@
     "priorty" : "Priorty",
     "high" : "High",
     "status" : "Status",
-    "open" : "Open",
-    "close" : "Close",
-    "message" : "Message"
+    "open" : "OPEN",
+    "close" : "CLOSED",
+    "message" : "Message",
+    "login_success" : "Login Successful",
+    "reported" : "reported an issue",
+    "issued": "Issued at: "
 }

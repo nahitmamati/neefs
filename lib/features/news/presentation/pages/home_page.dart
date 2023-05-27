@@ -13,6 +13,7 @@ import 'package:neefs/features/news/presentation/widgets/app_bar.dart';
 import 'package:neefs/features/news/presentation/widgets/recommendation_news.dart';
 import 'package:neefs/injection_container.dart';
 
+import '../../../../core/util/localization.dart';
 import '../../../user/data/models/user_model.dart';
 import '../cubit/news_cubit.dart';
 import '../widgets/breaking_news.dart';
@@ -41,16 +42,12 @@ class HomePage extends StatelessWidget {
       listener: (context, state) {
         if (state is NewsInitial) {
           EasyLoading.show();
-          print("Here");
         } else if (state is NewsLoading) {
-          print("Loading");
         } else if (state is NewsLoaded) {
           EasyLoading.dismiss();
-          print("Loaded");
         } else if (state is NewsFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Haber kalmadı usta")));
-          print("Fail kardeşşim");
+              const SnackBar(content: Text("Haber kalmadı")));
         }
       },
       builder: (context, state) {
@@ -66,17 +63,17 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Breaking News",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context).getTranslate("breaking_news"),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        "View all",
+                      child: Text(
+                        AppLocalizations.of(context).getTranslate("view_all"),
                       ),
                     ),
                   ],
@@ -89,8 +86,8 @@ class HomePage extends StatelessWidget {
                 options: CarouselOptions(
                   enlargeCenterPage: true,
                   onPageChanged: (index, reason) {
-                    context.read<SliderIndexCubit>().changeIndex(index);
-                    print(context.read<SliderIndexCubit>().sliderIndex);
+                    context.read<SliderIndexCubit>().index = index;
+                    print(context.read<SliderIndexCubit>().index);
                   },
                 ),
                 itemBuilder: (context, index, realIndex) => getNewsSlider(
@@ -121,9 +118,7 @@ class HomePage extends StatelessWidget {
                                             Brightness.dark
                                         ? Colors.white
                                         : Colors.black)
-                                    .withOpacity(context
-                                                .read<SliderIndexCubit>()
-                                                .sliderIndex ==
+                                    .withOpacity(state ==
                                             index
                                         ? 0.9
                                         : 0.4)),
@@ -137,17 +132,17 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Recommendation",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context).getTranslate("recommendation_news"),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        "View all",
+                      child: Text(
+                          AppLocalizations.of(context).getTranslate("view_all"),
                       ),
                     ),
                   ],
@@ -159,18 +154,13 @@ class HomePage extends StatelessWidget {
                     if (notification is ScrollEndNotification &&
                         notification.metrics.atEdge &&
                         notification.metrics.pixels != 0) {
-                      print("sonundayım");
                       context.read<NewsCubit>().page++;
-                      print(context.read<NewsCubit>().page);
-                      print(
-                          "uzunlupum bu kardeş ${context.read<NewsCubit>().news.length}");
                       context.read<NewsCubit>().loadNews();
                     }
-                    print("gelmedim");
                     return false;
                   },
                   child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     controller: getIt<ScrollController>(
                         instanceName: 'scrollController'),
                     child: Column(
